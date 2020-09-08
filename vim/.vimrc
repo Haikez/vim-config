@@ -1,7 +1,23 @@
+
+"设置相对行号
+set relativenumber
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
  
+" 窗口快速切换切
+nmap J <C-w>j
+nmap H <C-w>h
+nmap K <C-w>k
+nmap L <C-w>l
+nmap W <C-w>w
+nmap C <C-w>c
 
+" 括号自动不全
+inoremap ( ()<Esc>i
+inoremap [ []<Esc>i
+inoremap " ""<Esc>i
+inoremap { {<CR>}<Esc>O
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -9,7 +25,6 @@ call vundle#begin()
 
 
 Plugin 'vim-scripts/indentpython.vim'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'preservim/nerdtree'
 "autocmd vimenter * NERDTree
@@ -278,54 +293,5 @@ set mouse=a
 set selectmode=mouse,key
 " 共享剪贴板
 set clipboard+=unnamed
-
-
-" => YouCompleteMe  代码自动补全
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" youcompleteme  默认tab  s-tab 和自动补全冲突
-" let g:ycm_key_list_select_completion=['<c-n>']
-" let g:ycm_key_list_select_completion = ['<Down>']
-" let g:ycm_key_list_previous_completion=['<c-p>']
-" let g:ycm_key_list_previous_completion = ['<Up>']
-"set completeopt=longest,menu
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
-set completeopt=menu,menuone
-let g:ycm_add_preview_to_completeopt = 0
-let g:ycm_confirm_extra_conf=0      " 关闭加载.ycm_extra_conf.py提示
-let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
-let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
-let g:ycm_collect_identifiers_from_tags_files=1                 " 开启 YCM 基于标签引擎
-let g:ycm_collect_identifiers_from_comments_and_strings = 1   "注释和字符串中的文字也会被收入补全
-let g:ycm_seed_identifiers_with_syntax=1   "语言关键字补全, 不过python关键字都很短，所以，需要的自己打开
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_min_num_of_chars_for_completion=2                     " 从第2个键入字符就开始罗列匹配项
-let g:ycm_path_to_python_interpreter='/usr/bin/python3'
-" 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
-"
-"mapping
-nmap <leader>gd :YcmDiags<CR>
-nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>           "跳转到申明处
-nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>            "跳转到定义处
-nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-" 黑名单,不启用
-"设置YCM语义补全自动触发条件
-let g:ycm_semantic_triggers =  {
-	\'c' : ['->', '.'],
-	\'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-	\'re!\[.*\]\s'],
-	\'ocaml' : ['.', '#'],
-	\'cpp,objcpp' : ['->', '.', '::'],
-	\'perl' : ['->'],
-	\'php' : ['->', '::'],
-	\'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-	\'ruby' : ['.', '::'],
-	\'lua' : ['.', ':'],
-	\'erlang' : [':'],
-	\}
-let g:ycm_semantic_triggers =  {
-			\'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-			\'cs,lua,javascript': ['re!\w{2}'],
-			\}
 
 
