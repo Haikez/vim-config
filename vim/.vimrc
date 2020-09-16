@@ -19,14 +19,16 @@ inoremap [ []<Esc>i
 inoremap " ""<Esc>i
 inoremap { {<CR>}<Esc>O
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'preservim/nerdtree'
+" colorscheme gruvbox
+Plug 'morhetz/gruvbox'
+" Color
+Plug 'ap/vim-css-color'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'VundleVim/Vundle.vim'
+Plug 'preservim/nerdtree'
+call plug#end()
 "autocmd vimenter * NERDTree
 let g:NERDTreeWinSize = 25
 let NERDTreeShowBookmarks=1
@@ -39,11 +41,6 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 let NERDTreeIgnore =['\.pyc$', '\.swp', '\.swo', '\.vscode', '__pycache__']
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
-
-
-" All of your Plugins must be added before the following line
-call vundle#end()        
-filetype plugin indent on  
 
 
 "********************************************************************************
@@ -183,8 +180,26 @@ else
 endif
  
 " 主题设置为 solarized
-"colorscheme solarized
-"colorscheme molokai
+" colorscheme
+set bg=dark
+colorscheme gruvbox
+
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+autocmd FileType go nmap <leader>r <Plug>(go-run) %<CR>
+autocmd FileType go nmap <leader>b <Plug>(go-build) %<CR>
+autocmd FileType go nmap <leader>t <Plug>(go-test) %<CR>
+
+
+let g:rainbow_active = 1
+
+autocmd FileType go nmap <leader>t <Plug>(go-test) %<CR>
+
 "********************************************************************************
 " 编码设置
 "********************************************************************************
