@@ -1,26 +1,4 @@
-
-"设置相对行号
-set relativenumber
-
-set nocompatible              " be iMproved, required
-filetype off                  " required
- 
-" 窗口快速切换切
-nmap J <C-w>j
-nmap H <C-w>h
-nmap K <C-w>k
-nmap L <C-w>l
-nmap W <C-w>w
-nmap C <C-w>c
-
-" 括号自动不全
-inoremap ( ()<Esc>i
-inoremap [ []<Esc>i
-inoremap " ""<Esc>i
-inoremap { {<CR>}<Esc>O
-
 call plug#begin('~/.vim/plugged')
-
 " colorscheme gruvbox
 Plug 'morhetz/gruvbox'
 " Color
@@ -41,7 +19,6 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 let NERDTreeIgnore =['\.pyc$', '\.swp', '\.swo', '\.vscode', '__pycache__']
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
-
 
 "********************************************************************************
 " 新建 .c, .h, .sh, .java .py 文件时，自动插入文件头
@@ -101,13 +78,9 @@ function SetTitle()
         call append(line(".")+22, "#endif /* _".toupper(expand("%:r"))."_H */")
         call append(line(".")+23, "")
     endif
- 
     " 新建文件后，自动定位到文件末尾
     autocmd BufNewFile * normal G
 endfunc
-" ************************************************************
-" <F1> ~ <F12> 配置
-" <F1> 打开 vim 帮助，保留
  
 " ************************************************************
 " 命令行模式增强，ctrl-a 到行首，ctrl-e 到行尾
@@ -116,16 +89,7 @@ cnoremap <C-e> <End>
 " 插入模式增强，ctrl-a 到行首，ctrl-e 到行尾
 imap <C-a> <Esc>^
 imap <C-e> <Esc>$
- 
-" Ctrl-n 打开/关闭相对行号显示
-"nnoremap <C-n> :call RelativenumberToggle()<CR>
-"function RelativenumberToggle()
-"    if (&relativenumber == 1)
-"       set norelativenumber number
-"   else
-"       set relativenumber
-"   endif
-"endfunc
+
 " ************************************************************
 
 " ************************************************************
@@ -179,27 +143,6 @@ else
     set background=dark
 endif
  
-" 主题设置为 solarized
-" colorscheme
-set bg=dark
-colorscheme gruvbox
-
-
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_types = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-autocmd FileType go nmap <leader>r <Plug>(go-run) %<CR>
-autocmd FileType go nmap <leader>b <Plug>(go-build) %<CR>
-autocmd FileType go nmap <leader>t <Plug>(go-test) %<CR>
-
-
-let g:rainbow_active = 1
-
-autocmd FileType go nmap <leader>t <Plug>(go-test) %<CR>
-
 "********************************************************************************
 " 编码设置
 "********************************************************************************
@@ -216,7 +159,6 @@ set encoding=utf8
 set fileencodings=ucs-bom,utf8,gbk,cp936,gb2312,gb18030
 " 文件输入输出使用的格式，默认为 UNIX 格式
 set fileformats=unix,dos
-
 "********************************************************************************
 " 代码排版
 "********************************************************************************
@@ -231,12 +173,7 @@ set cinoptions=g0,:0,N-s,(0
 " 智能选择对齐方式
 set smartindent
 
-
-
 filetype plugin on
-let g:pydiction_location = '~/.vim/bundle/pydiction/complete-dict'
-let g:pydiction_menu_height = 3
-
 
 "********************************************************************************
 " 搜索配置
@@ -255,7 +192,6 @@ set smartcase
 "********************************************************************************
 " 自动保存
 set autowrite
-
 
 "********************************************************************************
 " 基本设置
@@ -308,5 +244,29 @@ set mouse=a
 set selectmode=mouse,key
 " 共享剪贴板
 set clipboard+=unnamed
+"设置相对行号
+set relativenumber
+set nocompatible   " be iMproved, required
+filetype off       " required
+" Ctrl-n 打开/关闭相对行号显示
+nnoremap <C-n> :call RelativenumberToggle()<CR>
+function RelativenumberToggle()
+    if (&relativenumber == 1)
+       set norelativenumber number
+   else
+       set relativenumber
+   endif
+endfunc
+" 窗口快速切换切
+nmap J <C-w>j
+nmap H <C-w>h
+nmap K <C-w>k
+nmap L <C-w>l
+nmap W <C-w>w
+nmap C <C-w>c
 
-
+" 括号自动不全
+inoremap ( ()<Esc>i
+inoremap [ []<Esc>i
+inoremap " ""<Esc>i
+inoremap { {<CR>}<Esc>O
