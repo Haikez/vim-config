@@ -1,5 +1,4 @@
 call plug#begin('~/.vim/plugged')
-Plug 'davidhalter/jedi-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'	
 Plug 'tomasr/molokai'	
@@ -7,7 +6,6 @@ Plug 'preservim/nerdtree'
 Plug 'nathanaelkane/vim-indent-guides' 
 Plug 'octol/vim-cpp-enhanced-highlight'	
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'Valloric/YouCompleteMe'
 Plug 'Yggdroot/indentLine'
 call plug#end()
 let g:ycm_server_python_interpreter='/usr/bin/python3.7'
