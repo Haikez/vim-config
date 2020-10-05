@@ -1,12 +1,67 @@
 call plug#begin('~/.vim/plugged')
-" colorscheme gruvbox
-Plug 'morhetz/gruvbox'
-" Color
-Plug 'ap/vim-css-color'
-Plug 'vim-scripts/indentpython.vim'
-Plug 'VundleVim/Vundle.vim'
+Plug 'davidhalter/jedi-vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'	
+Plug 'tomasr/molokai'	
 Plug 'preservim/nerdtree'
+Plug 'nathanaelkane/vim-indent-guides' 
+Plug 'octol/vim-cpp-enhanced-highlight'	
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'Valloric/YouCompleteMe'
+Plug 'taglist.vim'
 call plug#end()
+let g:ycm_server_python_interpreter='/usr/bin/python3.7'
+let g:pydiction_location = '~/.vim/plugged/pydiction/complete-dict'
+let g:ycm_global_ycm_extra_conf='~/.vim/plugged/.ycm_extra_conf.py'
+let g:pydiction_menu_height = 3
+set nocompatible
+set backspace=indent,eol,start
+"===============================Jedi==================================
+if has('python3')
+let g:loaded_youcompleteme = 1 " 判断如果是python3的话，就禁用ycmd。
+let g:jedi#force_py_version = 3
+let g:pymode_python = 'python3'
+n 'taglist.vim'endif
+"===============================Jedi===================================
+let Tlist_Auto_Hight_tag =1  
+let Tlist_Auto_Open=0  
+let Tlist_Auto_Update=1  
+let Tlist_Display_Tag_Scope=1  
+let Tlist_Exit_OnlyWindow=1  
+let Tlist_Enable_Dold_Column=1  
+let Tlist_File_Fold_Auto_Close=1  
+let Tlist_Show_One_File=1  
+let Tlist_Use_Right_Window=1  
+let Tlist_Use_SingleClick=1  
+nnoremap <silent> <F8> :TlistToggle<CR>
+   
+autocmd FileType python set omnifunc=pythoncomplete#Complete  
+autocmd FileType javascrīpt set omnifunc=javascriptcomplete#CompleteJS  
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags  
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS  
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags  
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP  
+autocmd FileType c set omnifunc=ccomplete#Complete  
+
+set t_Co=256      "在windows中用xshell连接打开vim可以显示色彩
+let g:airline#extensions#tabline#enabled = 1   " 是否打开tabline
+"这个是安装字体后 必须设置此项" 
+let g:airline_powerline_fonts = 1
+set laststatus=2  "永远显示状态栏
+let g:airline_theme='bubblegum' "选择主题
+let g:airline#extensions#tabline#enabled=1    "Smarter tab line: 显示窗口tab和buffer
+"let g:airline#extensions#tabline#left_sep = ' '  "separater
+"let g:airline#extensions#tabline#left_alt_sep = '|'  "separater
+"let g:airline#extensions#tabline#formatter = 'default'  "formater
+let g:airline_left_sep = '▶'
+let g:airline_left_alt_sep = '❯'
+let g:airline_right_sep = '◀'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" 打开vim时,自动打开NERDTree
 "autocmd vimenter * NERDTree
 let g:NERDTreeWinSize = 25
 let NERDTreeShowBookmarks=1
@@ -81,7 +136,7 @@ function SetTitle()
     " 新建文件后，自动定位到文件末尾
     autocmd BufNewFile * normal G
 endfunc
- 
+
 " ************************************************************
 " 命令行模式增强，ctrl-a 到行首，ctrl-e 到行尾
 cnoremap <C-a> <Home>
@@ -89,20 +144,11 @@ cnoremap <C-e> <End>
 " 插入模式增强，ctrl-a 到行首，ctrl-e 到行尾
 imap <C-a> <Esc>^
 imap <C-e> <Esc>$
-
-" ************************************************************
-
-" ************************************************************
-" 使用大写字母 H、L 替换行首行尾符号
-"noremap H ^
-"noremap L $
- 
 " 把 <Tab> 替换成 4 个空格
 nnoremap tt :%s/\t/    /g<CR>
 " 删除行尾多余空格
 nnoremap cl :%s/\s\+$//g<CR>:w<CR>
- 
- 
+
 "********************************************************************************
 " 编译调试
 "********************************************************************************
@@ -143,9 +189,19 @@ else
     set background=dark
 endif
  
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+autocmd FileType go nmap <leader>r <Plug>(go-run) %<CR>
+autocmd FileType go nmap <leader>b <Plug>(go-build) %<CR>
+autocmd FileType go nmap <leader>t <Plug>(go-test) %<CR>
+let g:rainbow_active = 1
 "********************************************************************************
 " 编码设置
-"********************************************************************************
+"**************************************************************************
 " 帮助语言首选
 set helplang=cn
 " 菜单使用的语言
@@ -159,6 +215,7 @@ set encoding=utf8
 set fileencodings=ucs-bom,utf8,gbk,cp936,gb2312,gb18030
 " 文件输入输出使用的格式，默认为 UNIX 格式
 set fileformats=unix,dos
+
 "********************************************************************************
 " 代码排版
 "********************************************************************************
@@ -172,7 +229,6 @@ set cindent
 set cinoptions=g0,:0,N-s,(0
 " 智能选择对齐方式
 set smartindent
-
 filetype plugin on
 
 "********************************************************************************
@@ -246,8 +302,8 @@ set selectmode=mouse,key
 set clipboard+=unnamed
 "设置相对行号
 set relativenumber
-set nocompatible   " be iMproved, required
-filetype off       " required
+set nocompatible    " be iMproved, required
+filetype off        " required
 " Ctrl-n 打开/关闭相对行号显示
 nnoremap <C-n> :call RelativenumberToggle()<CR>
 function RelativenumberToggle()
@@ -270,3 +326,12 @@ inoremap ( ()<Esc>i
 inoremap [ []<Esc>i
 inoremap " ""<Esc>i
 inoremap { {<CR>}<Esc>O
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vim color file
+set background=dark
+set t_Co=256 "告知molokai，终端支持256色。
+colorscheme molokai 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
