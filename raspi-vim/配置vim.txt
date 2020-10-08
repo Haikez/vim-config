@@ -5,6 +5,7 @@
 
 安装Pydiction：
 cd ~/.vim/plugged
+git clone https://github.com/rkulla/pydiction.git
 cp -r ~/.vim/plugged/pydiction/after/ ~/.vim
 
 配色方案：
