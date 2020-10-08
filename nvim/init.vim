@@ -165,7 +165,6 @@ Plug 'junegunn/fzf.vim'
 set rtp+=/usr/local/opt/fzf
 Plug '/usr/local/opt/fzf'
 
-
 " easymotion
 Plug 'easymotion/vim-easymotion'
 
