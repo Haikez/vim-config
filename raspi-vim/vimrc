@@ -9,10 +9,16 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'davidhalter/jedi-vim'
 Plug 'majutsushi/tagbar'
-""Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
+" Vim-Startify启动
+Plug 'mhinz/vim-startify'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'w0rp/ale'
+"翻译插件
+Plug 'voldikss/vim-translator'
+"markdown-preview
+Plug 'iamcco/markdown-preview.vim', { 'for' :['markdown','vim-plug'] }
 call plug#end()
-let g:ycm_server_python_interpreter='/usr/bin/python3.7'
+"let g:ycm_server_python_interpreter='/usr/bin/python3.7'
 let g:pydiction_location = '~/.vim/plugged/pydiction/complete-dict'
 "let g:ycm_global_ycm_extra_conf='~/.vim/plugged/.ycm_extra_conf.py'
 let g:pydiction_menu_height = 3
@@ -26,12 +32,12 @@ let g:pymode_python = 'python3'
 "n 'taglist.vim'endif
 "===============================Jedi===================================
 "TagBar
-map <C-o> :Tagbar<CR>
+map <C-o> :TagbarToggle<CR>
 let g:tagbar_ctags_bin='/usr/bin/ctags' "设置ctags所在路径
 let g:tagbar_width=25 "设置tagbar的宽度
 "let g:tagbar_left = 1  "让tagbar在页面左侧显示，默认右边
 let g:tagbar_autofocus = 1 "这是tagbar一打开，光标即在tagbar页面内，默认在vim打开的文件内
-autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen() "在某些情况下自动打开tagbar
+"autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen() "在某些情况下自动打开tagbar
 noremap <F6> :!ctags -R<CR>
  
 autocmd FileType python set omnifunc=pythoncomplete#Complete  
@@ -66,7 +72,7 @@ let g:NERDTreeWinSize = 25
 let NERDTreeShowBookmarks=1
 map <C-c> :NERDTreeMirror<CR>
 map <C-c> :NERDTreeToggle<CR>
-autocmd vimenter * if !argc()|NERDTree|endif
+"autocmd vimenter * if !argc()|NERDTree|endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
@@ -75,65 +81,6 @@ let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 
 "********************************************************************************
-" 新建 .c, .h, .sh, .java .py 文件时，自动插入文件头
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py exec ":call SetTitle()"
-" 定义函数 SetTitle，自动插入文件头
-function SetTitle()
-    if &filetype == 'sh'
-        call setline(1,"\#!/bin/bash")
-        call append(line("."), "")
- 
-    elseif &filetype == 'python'
-        call setline(1,"#!/usr/bin/env python")
-        call append(line("."),"# coding=utf-8")
-        call append(line(".")+1, "")
- 
-    elseif &filetype == 'c'
-        call setline(1, "#include <stdio.h>")
-        call append(line("."), "int main()")    
-	call append(line(".")+1,"{")
-    else
-        call setline(1, "/**")
-        call append(line("."), " * Copyright (C) 2019-2019 XXX Technology Co., Ltd. All rights reserved.")
-        call append(line(".")+1, " * ")
-        call append(line(".")+2, " * File Name: ".expand("%"))
-        call append(line(".")+3, " * Author: NiChu")
-        call append(line(".")+4, " * Mail: 1937086590@qq.com")
-        call append(line(".")+5, " * Created Time: ".strftime("%Y-%m-%d %H:%M"))
-        call append(line(".")+6, " */")
-        call append(line(".")+7, "")
-    endif
- 
-    if expand("%:e") == 'cpp'
-        call append(line(".")+8, "#include <iostream>")
-        call append(line(".")+9, "using namespace std;")
-        call append(line(".")+10, "")
- 
-    elseif &filetype == 'java'
-        call append(line(".")+8,"public class ".expand("%:r"))
-        call append(line(".")+9,"")
-
-    elseif expand("%:e") == 'h'
-        call append(line(".")+8, "#ifndef _".toupper(expand("%:r"))."_H")
-        call append(line(".")+9, "#define _".toupper(expand("%:r"))."_H")
-        call append(line(".")+10, "")
-        call append(line(".")+11, "#ifdef __cplusplus")
-        call append(line(".")+12, "extern \"C\"")
-        call append(line(".")+13, "{")
-        call append(line(".")+14, "#endif")
-        call append(line(".")+15, "")
-        call append(line(".")+16, "")
-        call append(line(".")+17, "")
-        call append(line(".")+18, "#ifdef __cplusplus")
-        call append(line(".")+19, "}")
-        call append(line(".")+20, "#endif")
-        call append(line(".")+21, "")
-        call append(line(".")+22, "#endif /* _".toupper(expand("%:r"))."_H */")
-        call append(line(".")+23, "")
-    endif
-    " 新建文件后，自动定位到文件末尾
-    autocmd BufNewFile * normal G
-endfunc
 
 " ************************************************************
 " 命令行模式增强，ctrl-a 到行首，ctrl-e 到行尾
@@ -155,11 +102,13 @@ map <C-R> :call CompileRunGcc()<CR>
 function CompileRunGcc()
     exec "w"
     if &filetype == 'c'
-        exec "!g++ % -o %<"
-        exec "!time ./%<"
+	exec "!g++ % -std=c++11 -o %<"
+	exec "!time ./%<"
+ ""       exec """g++ % -o %<"
+""	exec """:ter ++rows=12 ./%<"
     elseif &filetype == 'cpp'
-        exec "!g++ % -std=c++11 -o %<"
-        exec "!time ./%<"
+	exec "!g++ % -std=c++11 -o %<"
+	exec "!time ./%<"
     elseif &filetype == 'java'
         exec "!javac %"
         exec "!time java %<"
@@ -311,7 +260,7 @@ function RelativenumberToggle()
        set relativenumber
    endif
 endfunc
-" 窗口快速切换切
+" 窗口快速切换
 nmap J <C-w>j
 nmap H <C-w>h
 nmap K <C-w>k
@@ -319,6 +268,13 @@ nmap L <C-w>l
 nmap W <C-w>w
 nmap C <C-w>c
 
+"多窗口切换
+nmap <Leader>n :bn<CR>
+nmap <Leader>p :bp<CR>
+"快速保存退出
+nmap <Leader>q :q<CR>
+nmap <Leader>wq :wq<CR>
+nmap <Leader>w :w<CR>
 " 括号自动不全
 inoremap ( ()<Esc>i
 inoremap [ []<Esc>i
@@ -332,3 +288,119 @@ set t_Co=256 "告知molokai，终端支持256色。
 colorscheme molokai 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 endif
+"ale
+"始终开启标志列
+let g:ale_sign_column_always = 1
+let g:ale_set_highlights = 0
+"自定义error和warning图标
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚡'
+"在vim自带的状态栏中整合ale
+let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+"显示Linter名称,出错或警告等相关信息
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
+nmap sp <Plug>(ale_previous_wrap)
+nmap sn <Plug>(ale_next_wrap)
+"<Leader>s触发/关闭语法检查
+nmap <Leader>s :ALEToggle<CR>
+"<Leader>d查看错误或警告的详细信息
+nmap <Leader>d :ALEDetail<CR>
+let g:ale_linters={
+\	'c++': ['g++'],
+\	'c': ['clang'],
+\}
+"coc.nvim"
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+"翻译插件配置
+" <Leader>t 翻译光标下的文本，在命令行回显
+nmap <silent> <Leader>t <Plug>Translate
+vmap <silent> <Leader>t <Plug>TranslateV
+" Leader>w 翻译光标下的文本，在窗口中显示
+nmap <silent> <Leader>w <Plug>TranslateW
+vmap <silent> <Leader>w <Plug>TranslateWV
+" Leader>r 替换光标下的文本为翻译内容
+nmap <silent> <Leader>r <Plug>TranslateR
+vmap <silent> <Leader>r <Plug>TranslateRV
+""if has('mouse')
+""	set mouse-=a
+""endif
+"设置书签
+let g:startify_bookmarks            = [
+            \ '~/Project/test.cpp',
+            \]
+"起始页显示的列表长度
+let g:startify_files_number = 5
+"自动加载session
+let g:startify_session_autoload = 1
+"过滤列表，支持正则表达式
+let g:startify_skiplist = [
+       \ '^/tmp',
+       \ ]
+"自定义Header和Footer
+let g:startify_custom_header = [
+		\'    ___       ___       ___       ___       ___       ___   ',
+		\'   /\__\     /\  \     /\  \     /\__\     /\  \     /\  \  ',
+		\'  /:/__/_   /::\  \   _\:\  \   /:/ _/_   /::\  \   _\:\  \ ',
+		\' /::\/\__\ /::\:\__\ /\/::\__\ /::-"\__\ /::\:\__\ /::::\__\',
+		\' \/\::/  / \/\::/  / \::/\/__/ \;:;-",-" \:\:\/  / \::;;/__/',
+		\'   /:/  /    /:/  /   \:\__\    |:|  |    \:\/  /   \:\__\  ',
+		\'   \/__/     \/__/     \/__/     \|__|     \/__/     \/__/  ',
+	        \]
+let g:startify_custom_footer = [
+            \ '+------------------------------+',
+	    \' ____ ____ ____ ____ ____ ____',
+	    \'||H |||a |||i |||k |||e |||z ||',
+	    \'||__|||__|||__|||__|||__|||__||',
+	    \'|/__\|/__\|/__\|/__\|/__\|/__\|',
+            \ '|     Keep an open mind!       |',
+            \ '+----------------+-------------+',
+            \]
+
+
+
+
+
+let g:mkdp_path_to_chrome = ""
+    " Path to the chrome or the command to open chrome (or other modern browsers).
+    " If set, g:mkdp_browserfunc would be ignored.
+
+    let g:mkdp_browserfunc = 'MKDP_browserfunc_default'
+    " Callback Vim function to open browser, the only parameter is the url to open.
+
+    let g:mkdp_auto_start = 0
+    " Set to 1, Vim will open the preview window on entering the Markdown
+    " buffer.
+
+    let g:mkdp_auto_open = 0
+    " Set to 1, Vim will automatically open the preview window when you edit a
+    " Markdown file.
+
+    let g:mkdp_auto_close = 1
+    " Set to 1, Vim will automatically close the current preview window when
+    " switching from one Markdown buffer to another.
+
+    let g:mkdp_refresh_slow = 0
+    " Set to 1, Vim will just refresh Markdown when saving the buffer or
+    " leaving from insert mode. With default 0, it will automatically refresh
+    " Markdown as you edit or move the cursor.
+
+    let g:mkdp_command_for_global = 0
+    " Set to 1, the MarkdownPreview command can be used for all files,
+    " by default it can only be used in Markdown files.
+
+    let g:mkdp_open_to_the_world = 0
+    " Set to 1, the preview server will be available to others in your network.
+    " By default, the server only listens on localhost (127.0.0.1).
+    nmap <silent> <C-,> <Plug>MarkdownPreview

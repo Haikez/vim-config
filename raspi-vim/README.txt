@@ -1,4 +1,4 @@
-编译安装vim：
+一、编译安装vim：
 
 1.安装依赖
 sudo apt-get install python-dev
@@ -28,3 +28,20 @@ sudo make &&sudo make install
 --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ 指定python 路径
 --with-python-config-dir=/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu/ 指定python3路径，但根据测试，本文需要的vim必须支持python3而不是python2,而一旦配置2，3的配置就无效了
 --prefix=/usr/local/vim：指定将要安装到的路径(自行创建，但建议不知道vim默认安装路径的时候最多/usr就可以了)
+
+二、vim基本配置
+
+安装插件
+1.pydiction自动补全插件
+自动补全插件Pydiction是一款好用的Vim Python主动补全插件，首要便利用于在vim中运用tab键主动补全Python代码，支撑输入部分Python关键字、模块名、特点和方法名等，兼容规范的、自定义的和第三方模块和包。
+
+安装Pydiction：
+cd ~/.vim/plugged
+git clone https://github.com/rkulla/pydiction.git
+cp -r ~/.vim/plugged/pydiction/after/ ~/.vim
+
+配色方案：
+mkdir ~/.vim/color
+cd ~/.vim/color
+
+		
