@@ -90,7 +90,8 @@ cnoremap <C-e> <End>
 imap <C-a> <Esc>^
 imap <C-e> <Esc>$
 " 把 <Tab> 替换成 4 个空格
-nnoremap tt :%s/\t/    /g<CR>
+set tabstop=4
+"nnoremap tt :%s/\t/    /g<CR>
 " 删除行尾多余空格
 nnoremap cl :%s/\s\+$//g<CR>:w<CR>
 
@@ -155,6 +156,7 @@ set helplang=cn
 set langmenu=zh_CN.UTF-8
 " Vim 所工作的终端的字符编码方式
 set termencoding=utf-8
+set termwinsize=40*0
 " Vim 内部使用的字符编码方式
 set encoding=utf8
 " Vim 启动时会按照 fileencodings 所列出的字符编码方式逐一探测即将打开的文件的字符编码方式，
@@ -214,7 +216,7 @@ set novisualbell
 " 总是显示光标位置
 set ruler
 " 高亮显示当前行
-"set cursorline
+set cursorline
 " 在状态栏显示正在输入的命令
 set showcmd
 " 命令行的高度
@@ -246,7 +248,7 @@ set mouse=a
 " 选择模式使用鼠标
 set selectmode=mouse,key
 " 共享剪贴板
-set clipboard+=unnamed
+set clipboard=unnamedplus
 "设置相对行号
 set relativenumber
 set nocompatible    " be iMproved, required
@@ -279,16 +281,20 @@ nmap <Leader>w :w<CR>
 inoremap ( ()<Esc>i
 inoremap [ []<Esc>i
 inoremap " ""<Esc>i
+inoremap < <><Esc>i
 inoremap { {<CR>}<Esc>O
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim color file
 set background=dark
 set t_Co=256 "告知molokai，终端支持256色。
-colorscheme molokai 
+"colorscheme molokai 
+colorscheme molokai
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 endif
 "ale
+"打开文件时不检查
+let g:ale_lint_on_enter=0
 "始终开启标志列
 let g:ale_sign_column_always = 1
 let g:ale_set_highlights = 0
@@ -328,14 +334,15 @@ endfunction
 nmap <silent> <Leader>t <Plug>Translate
 vmap <silent> <Leader>t <Plug>TranslateV
 " Leader>w 翻译光标下的文本，在窗口中显示
-nmap <silent> <Leader>w <Plug>TranslateW
-vmap <silent> <Leader>w <Plug>TranslateWV
+nmap <silent> <Leader>r <Plug>TranslateW
+vmap <silent> <Leader>r <Plug>TranslateWV
 " Leader>r 替换光标下的文本为翻译内容
-nmap <silent> <Leader>r <Plug>TranslateR
-vmap <silent> <Leader>r <Plug>TranslateRV
-""if has('mouse')
-""	set mouse-=a
-""endif
+nmap <silent> <Leader>w <Plug>TranslateR
+vmap <silent> <Leader>w <Plug>TranslateRV
+"使用鼠标滚动
+if has('mouse')
+	set mouse-=a
+endif
 "设置书签
 let g:startify_bookmarks            = [
             \ '~/Project/test.cpp',
@@ -369,38 +376,20 @@ let g:startify_custom_footer = [
             \]
 
 
+    "Open lazygit
+    "noremap <Esc>g :tabe<CR>:-tabmove<CR>:term lazygit<CR>
+noremap <Esc>g :!lazygit<CR>
+noremap <Esc>r :!ranger<CR>
+"主题配置
+"disable italics
+let g:vorange_italic = 0
 
+"disable bold
+let g:vorange_bold = 0
 
+"disable underline
+let g:vorange_underline=0
 
-let g:mkdp_path_to_chrome = ""
-    " Path to the chrome or the command to open chrome (or other modern browsers).
-    " If set, g:mkdp_browserfunc would be ignored.
-
-    let g:mkdp_browserfunc = 'MKDP_browserfunc_default'
-    " Callback Vim function to open browser, the only parameter is the url to open.
-
-    let g:mkdp_auto_start = 0
-    " Set to 1, Vim will open the preview window on entering the Markdown
-    " buffer.
-
-    let g:mkdp_auto_open = 0
-    " Set to 1, Vim will automatically open the preview window when you edit a
-    " Markdown file.
-
-    let g:mkdp_auto_close = 1
-    " Set to 1, Vim will automatically close the current preview window when
-    " switching from one Markdown buffer to another.
-
-    let g:mkdp_refresh_slow = 0
-    " Set to 1, Vim will just refresh Markdown when saving the buffer or
-    " leaving from insert mode. With default 0, it will automatically refresh
-    " Markdown as you edit or move the cursor.
-
-    let g:mkdp_command_for_global = 0
-    " Set to 1, the MarkdownPreview command can be used for all files,
-    " by default it can only be used in Markdown files.
-
-    let g:mkdp_open_to_the_world = 0
-    " Set to 1, the preview server will be available to others in your network.
-    " By default, the server only listens on localhost (127.0.0.1).
-    nmap <silent> <C-,> <Plug>MarkdownPreview
+"disable undercurl
+let g:vorange_undercurl=0
+set guicursor+=v:vCursor

@@ -1,343 +1,74 @@
-"设置相对行号
-set relativenumber
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Keymap
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"let mapleader = ","
-"let g:mapleader = ","
-
-"exec 'cd ' . fnameescape('/Users/itgoyo/Documents/Vim')
-
-let mapleader = ","
-
-nmap <leader>mo :set modifiable<cr>
-set modifiable
-
-syntax on " 自动语法高亮
-
-" 键位绑定  Keymap
-
-"<k0> - <k9> 小键盘 0 到 9
-"<S-...> Shift＋键
-"<C-...> Control＋键
-"<M-...> Alt＋键 或 meta＋键
-"<A-...> 同 <M-...>
-"<Esc> Escape 键
-"<Up> 光标上移键
-"<Space> 插入空格
-"<Tab> 插入 Tab
-"<CR> 等于 <Enter>
-"<D> Command
-
-" ACK
-map <C-a> :Ack<space>
-
-" 窗口快速切换切换
-nmap J <C-w>j
-nmap H <C-w>h
-nmap K <C-w>k
-nmap L <C-w>l
-nmap W <C-w>w
-nmap C <C-w>c
-
-" 括号自动不全
-inoremap ( ()<Esc>i
-inoremap [ []<Esc>i
-inoremap " ""<Esc>i
-inoremap { {<CR>}<Esc>O
-
-inoremap <leader>l <C-w>l
-"使用leader+w 直接保存
-"nmap <leader>w :w!<cr>
-nmap <leader>q :wqall!<cr>
-
-"解决insert模式切换回normal模式下延迟的问题 这货会影响leader的事件触发，最好别用 浪费我很多时间
-"set timeoutlen=1 ttimeoutlen=0
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => 自定义Keymap
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <M-y>  :call AddTitle()<CR>
-nnoremap <M-t> :call DateAndTime()<CR>
-
-
-"Mode Settings
-
-let &t_SI.="\e[5 q" "SI = INSERT mode
-let &t_SR.="\e[4 q" "SR = REPLACE mode
-let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
-
-"Cursor settings:
-
-"  1 -> blinking block
-"  2 -> solid block
-"  3 -> blinking underscore
-"  4 -> solid underscore
-"  5 -> blinking vertical bar
-"  6 -> solid vertical bar
-
-
-
-"let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-"let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-"let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-
-
-
-
-"MarkdownPreview
-"let g:instant_markdown_port = 8888
-
-" 退出插入模式指定类型的文件自动保存
-"au InsertLeave * write
-
-
-
-" NERDTree
- map <C-e> :NERDTreeToggle<CR>
-
-" Tagbar
- nmap <C-t> :TagbarToggle<CR>
- " Tagbar
-nmap <silent> <leader>tb :TagbarToggle<cr>
-
-" fzf
-" Always enable preview window on the right with 60% width
-let g:fzf_preview_window = 'right:60%'
-
-nmap <C-z> :Files<CR>
-nmap <C-u> :Buffers<CR>
-
-
-" <Leader>f{char} to move to {char}
-nmap <Leader>f <Plug>(easymotion-overwin-f)
-
-" s{char}{char} to move to {char}{char}
-nmap s <Plug>(easymotion-overwin-f)
-
-"nmap <Leader>w <Plug>(easymotion-overwin-w)
-
-"nnoremap <leader>a :echo("\<leader\> works! It is set to <leader>")<CR>
-
-" Vim-Ranger
-map <leader>r :Ranger<CR>.
-let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
-set shell=bash
-
-" 切换buffer
-" Buffer Navigation
-"nmap <C-[> :bprevious<CR> 不知道mac hhkb下面是什么原因，如果是这个组合键的话，Caps映射的ESC会经常触发这个所以打算更换快捷键
-"nmap <C-]> :bnext<CR>
-nmap <M-[> :bprevious<CR>
-nmap <M-]> :bnext<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugin
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 call plug#begin('~/.config/nvim/plugged')
-
-" vim-airline
-Plug 'vim-airline/vim-airline'
-
 " colorscheme gruvbox
 Plug 'morhetz/gruvbox'
+"snippets代码片段
+Plug 'honza/vim-snippets'
+" Flutter
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'f-person/pubspec-assist-nvim', { 'for' : ['pubspec.yaml'] }
 
-" nerdtree
-Plug 'preservim/nerdtree'
-
-"YouCompleteMe
-Plug 'Valloric/YouCompleteMe'
-" Tagbar
-Plug 'majutsushi/tagbar'
-
-" ctrlp
-Plug 'ctrlpvim/ctrlp.vim'
-
-" MarkdownPreview
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
-
-" Fzf Vim
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"模糊查找
 Plug 'junegunn/fzf.vim'
-set rtp+=/usr/local/opt/fzf
-Plug '/usr/local/opt/fzf'
-
-" easymotion
-Plug 'easymotion/vim-easymotion'
-
-" wakatime
-
-" indent
+"nvim主题
+Plug 'Iron-E/nvim-highlite'
+Plug 'srcery-colors/srcery-vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tomasr/molokai'
+"Plug 'preservim/nerdtree'
 Plug 'nathanaelkane/vim-indent-guides'
-
-" COC
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'Yggdroot/indentLine'
+Plug 'davidhalter/jedi-vim'
+Plug 'majutsushi/tagbar'
+"nvim启动
+Plug 'glepnir/dashboard-nvim'
+" Vim-Startify启动
+"Plug 'mhinz/vim-startify'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Use release branch (recommend)
-
-" Vim-GO
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
-" ACK
-Plug 'mileszs/ack.vim'
-
-" Vim-Startify
-Plug 'mhinz/vim-startify'
-
-" Vim-Surround
-Plug 'tpope/vim-surround'
-
-" Vim-Ranger
-Plug 'francoiscabrol/ranger.vim'
-Plug 'rbgrouleff/bclose.vim'
-
-" Rainbow
-Plug 'luochen1990/rainbow'
-
-" Color
-Plug 'ap/vim-css-color'
-
-
-" ACK
-Plug 'mileszs/ack.vim'
-
-" Vim-Startify
-Plug 'mhinz/vim-startify'
-
-" Vim-Surround
-Plug 'tpope/vim-surround'
-
+"调试插件
+Plug 'w0rp/ale'
+"markdown-preview
+Plug 'iamcco/markdown-preview.vim', { 'for' :['markdown','vim-plug'] }
+"clap模糊查找
+"Plug 'liuchengxu/vim-clap'
 call plug#end()
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Methods
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-" 让输入上方，搜索列表在下方
-    let $FZF_DEFAULT_OPTS = '--layout=reverse'
-
-    " 打开 fzf 的方式选择 floating window
-    let g:fzf_layout = { 'window': 'call OpenFloatingWin()' }
-
-    function! OpenFloatingWin()
-  let height = &lines - 3
-  let width = float2nr(&columns - (&columns * 2 / 10))
-  let col = float2nr((&columns - width) / 2)
-
-  " 设置浮动窗口打开的位置，大小等。
-  " 这里的大小配置可能不是那么的 flexible 有继续改进的空间
-  let opts = {
-        \ 'relative': 'editor',
-        \ 'row': height * 0.3,
-        \ 'col': col + 30,
-        \ 'width': width * 2 / 3,
-        \ 'height': height / 2
-        \ }
-
-  let buf = nvim_create_buf(v:false, v:true)
-  let win = nvim_open_win(buf, v:true, opts)
-
-  " 设置浮动窗口高亮
-  call setwinvar(win, '&winhl', 'Normal:Pmenu')
-
-  setlocal
-        \ buftype=nofile
-        \ nobuflisted
-        \ bufhidden=hide
-        \ nonumber
-        \ norelativenumber
-        \ signcolumn=no
-endfunction
-
-
-
-"have indent guides enabled by default
-let g:indent_guides_enable_on_vim_startup = 1
-
-" colorscheme
-set bg=dark
-colorscheme gruvbox
-
-
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_types = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-autocmd FileType go nmap <leader>r <Plug>(go-run) %<CR>
-autocmd FileType go nmap <leader>b <Plug>(go-build) %<CR>
-autocmd FileType go nmap <leader>t <Plug>(go-test) %<CR>
-
-
-let g:rainbow_active = 1
-
-autocmd FileType go nmap <leader>t <Plug>(go-test) %<CR>
-
-"********************************************************************************
-" 新建 .c, .h, .sh, .java .py 文件时，自动插入文件头
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py exec ":call SetTitle()"
-" 定义函数 SetTitle，自动插入文件头
-function SetTitle()
-    if &filetype == 'sh'
-        call setline(1,"\#!/bin/bash")
-        call append(line("."), "")
- 
-    elseif &filetype == 'python'
-        call setline(1,"#!/usr/bin/env python")
-        call append(line("."),"# coding=utf-8")
-        call append(line(".")+1, "")
- 
-    elseif &filetype == 'c'
-        call setline(1, "#include <stdio.h>")
-        call append(line("."), "int main()")    
-	call append(line(".")+1,"{")
-    else
-        call setline(1, "/**")
-        call append(line("."), " * Copyright (C) 2019-2019 XXX Technology Co., Ltd. All rights reserved.")
-        call append(line(".")+1, " * ")
-        call append(line(".")+2, " * File Name: ".expand("%"))
-        call append(line(".")+3, " * Author: NiChu")
-        call append(line(".")+4, " * Mail: 1937086590@qq.com")
-        call append(line(".")+5, " * Created Time: ".strftime("%Y-%m-%d %H:%M"))
-        call append(line(".")+6, " */")
-        call append(line(".")+7, "")
-    endif
- 
-    if expand("%:e") == 'cpp'
-        call append(line(".")+8, "#include <iostream>")
-        call append(line(".")+9, "using namespace std;")
-        call append(line(".")+10, "")
- 
-    elseif &filetype == 'java'
-        call append(line(".")+8,"public class ".expand("%:r"))
-        call append(line(".")+9,"")
-
-    elseif expand("%:e") == 'h'
-        call append(line(".")+8, "#ifndef _".toupper(expand("%:r"))."_H")
-        call append(line(".")+9, "#define _".toupper(expand("%:r"))."_H")
-        call append(line(".")+10, "")
-        call append(line(".")+11, "#ifdef __cplusplus")
-        call append(line(".")+12, "extern \"C\"")
-        call append(line(".")+13, "{")
-        call append(line(".")+14, "#endif")
-        call append(line(".")+15, "")
-        call append(line(".")+16, "")
-        call append(line(".")+17, "")
-        call append(line(".")+18, "#ifdef __cplusplus")
-        call append(line(".")+19, "}")
-        call append(line(".")+20, "#endif")
-        call append(line(".")+21, "")
-        call append(line(".")+22, "#endif /* _".toupper(expand("%:r"))."_H */")
-        call append(line(".")+23, "")
-    endif
-    " 新建文件后，自动定位到文件末尾
-    autocmd BufNewFile * normal G
-endfunc
-
+set nocompatible
+set backspace=indent,eol,start
+"TagBar
+map <C-o> :TagbarToggle<CR>
+let g:tagbar_ctags_bin='/usr/bin/ctags' "设置ctags所在路径
+let g:tagbar_width=25 "设置tagbar的宽度
+"let g:tagbar_left = 1  "让tagbar在页面左侧显示，默认右边
+let g:tagbar_autofocus = 1 "这是tagbar一打开，光标即在tagbar页面内，默认在vim打开的文件内
+"autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen() "在某些情况下自动打开tagbar
+noremap <F6> :!ctags -R<CR>
+set t_Co=256      "在windows中用xshell连接打开vim可以显示色彩
+let g:airline#extensions#tabline#enabled = 1   " 是否打开tabline
+"这个是安装字体后 必须设置此项"
+let g:airline_powerline_fonts = 1
+set laststatus=2  "永远显示状态栏
+let g:airline_theme='bubblegum' "选择主题
+let g:airline#extensions#tabline#enabled=1    "Smarter tab line: 显示窗口tab和buffer
+let g:airline_left_sep = '▶'
+let g:airline_left_alt_sep = '❯'
+let g:airline_right_sep = '◀'
+" ************************************************************
+" 命令行模式增强，ctrl-a 到行首，ctrl-e 到行尾
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+" 插入模式增强，ctrl-a 到行首，ctrl-e 到行尾
+imap <C-a> <Esc>^
+imap <C-e> <Esc>$
+" 把 <Tab> 替换成 4 个空格
+"nnoremap tt :%s/\t/    /g<CR>
+set tabstop=4        
+set shiftwidth=4
+set softtabstop=4
+" 删除行尾多余空格
+nnoremap cl :%s/\s\+$//g<CR>:w<CR>
+    
 "********************************************************************************
 " 编译调试
 "********************************************************************************
@@ -346,11 +77,11 @@ map <C-R> :call CompileRunGcc()<CR>
 function CompileRunGcc()
     exec "w"
     if &filetype == 'c'
-        exec "!g++ % -o %<"
-        exec "!time ./%<"
+    exec "!g++ % -std=c++11 -o %<"
+    exec "term ./%<" 
     elseif &filetype == 'cpp'
-        exec "!g++ % -std=c++11 -o %<"
-        exec "!time ./%<"
+    exec "!g++ % -std=c++11 -o %<"
+    exec "term ./%<"
     elseif &filetype == 'java'
         exec "!javac %"
         exec "!time java %<"
@@ -360,61 +91,349 @@ function CompileRunGcc()
         exec "!time python3 %"
     endif
 endfunc
- 
-" <F8> gdb调试
-map <C-y> :call Rungdb()<CR>
+
+" <Ctrl+T> gdb调试
+map <C-T> :call Rungdb()<CR>
 function Rungdb()
     exec "w"
     exec "!g++ % -std=c++11 -g -o %<"
     exec "!gdb ./%<"
 endfunc
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => YouCompleteMe  代码自动补全
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" youcompleteme  默认tab  s-tab 和自动补全冲突
-" let g:ycm_key_list_select_completion=['<c-n>']
-" let g:ycm_key_list_select_completion = ['<Down>']
-" let g:ycm_key_list_previous_completion=['<c-p>']
-" let g:ycm_key_list_previous_completion = ['<Up>']
-"set completeopt=longest,menu
-set completeopt=menu,menuone
-let g:ycm_add_preview_to_completeopt = 0
-let g:ycm_confirm_extra_conf=0      " 关闭加载.ycm_extra_conf.py提示
-let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
-let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
-let g:ycm_collect_identifiers_from_tags_files=1                 " 开启 YCM 基于标签引擎
-let g:ycm_collect_identifiers_from_comments_and_strings = 1   "注释和字符串中的文字也会被收入补全
-let g:ycm_seed_identifiers_with_syntax=1   "语言关键字补全, 不过python关键字都很短，所以，需要的自己打开
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_min_num_of_chars_for_completion=2                     " 从第2个键入字符就开始罗列匹配项
-let g:ycm_path_to_python_interpreter='/usr/bin/python3'
-" 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
-let g:ycm_global_ycm_extra_conf = '~/.config/nvim/plugged/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
-"
-"mapping
-nmap <leader>gd :YcmDiags<CR>
-nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>           "跳转到申明处
-nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>            "跳转到定义处
-nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"********************************************************************************
+" 主题设置
+"********************************************************************************
+" GUI 模式浅色背景，终端模式深色背景
+if has('gui_running')
+    set background=light
+else
+    set background=dark
+endif
+"********************************************************************************
+" 编码设置
+"**************************************************************************
+" 帮助语言首选
+set helplang=cn
+" 菜单使用的语言
+set langmenu=zh_CN.UTF-8
+" Vim 所工作的终端的字符编码方式
+set termencoding=utf-8
+" Vim 内部使用的字符编码方式
+set encoding=utf8
+" Vim 启动时会按照 fileencodings 所列出的字符编码方式逐一探测即将打开的文件的字符编码方式,并且将 fileencoding 设置为最终探测到的字符编码方式
+set fileencodings=ucs-bom,utf8,gbk,cp936,gb2312,gb18030
+" 文件输入输出使用的格式，默认为 UNIX 格式
+set fileformats=unix,dos
 
-" 黑名单,不启用
-"设置YCM语义补全自动触发条件
-let g:ycm_semantic_triggers =  {
-	\'c' : ['->', '.'],
-	\'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-	\'re!\[.*\]\s'],
-	\'ocaml' : ['.', '#'],
-	\'cpp,objcpp' : ['->', '.', '::'],
-	\'perl' : ['->'],
-	\'php' : ['->', '::'],
-	\'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-	\'ruby' : ['.', '::'],
-	\'lua' : ['.', ':'],
-	\'erlang' : [':'],
-	\}
-let g:ycm_semantic_triggers =  {
-			\'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-			\'cs,lua,javascript': ['re!\w{2}'],
-			\}
+"********************************************************************************
+" 代码排版
+"********************************************************************************
+" 自适应不同语言的智能缩进
+filetype indent on
+" 自动缩进
+set autoindent
+" 使用 C/C++ 语言的自动缩进方式
+set cindent
+" C/C++ 语言的具体缩进方式
+set cinoptions=g0,:0,N-s,(0
+" 智能选择对齐方式
+set smartindent
+filetype plugin on
+
+"********************************************************************************
+" 搜索配置
+"********************************************************************************
+" 高亮显示当前行
+set cursorline
+" 高亮显示搜索结果
+set hlsearch
+" 输入搜索时，同时高亮部分的匹配
+set incsearch
+" 搜索时忽略大小写
+set ignorecase
+" 搜索时尝试smart，即模式中有大写字母时不忽略大小写
+set smartcase
+
+"********************************************************************************
+" 缓存配置
+"********************************************************************************
+" 自动保存
+set autowrite
+"********************************************************************************
+" 基本设置
+"********************************************************************************
+ " 启动时不显示援助乌干达儿童的提示
+set shortmess=atI
+" 开启语法高亮功能
+syntax enable
+" 开启语法高亮
+syntax on
+" 关闭 vi 一致性模式，避免以前版本的一些bug和局限
+set nocompatible
+" 去掉输入错误的提示声音
+set noerrorbells
+" 关闭使用可视响铃代替呼叫
+set novisualbell
+" 总是显示光标位置
+set ruler
+" 高亮显示当前行
+set cursorline
+" 在状态栏显示正在输入的命令
+set showcmd
+" 命令行的高度
+"set cmdheight=2
+" 总是显示状态栏
+set laststatus=2
+" 状态行显示的内容
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
+" <ESC> 键响应时间
+set ttimeoutlen=0
+" 显示括号配对，当键入“]”“)”时，高亮度显示匹配的括号
+set showmatch
+" 配对括号高亮时选中的括号显示黄色
+hi MatchParen ctermbg=Yellow guibg=lightblue
+" 允许光标出现在最后一个字符的后面
+set virtualedit=block,onemore
+" 文件修改之后自动读入
+set autoread
+" 自动保存
+set autowrite
+" vim 打开文件，光标定位到上次退出的位置
+if has("autocmd")
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+"使用鼠标滚动
+if has('mouse')
+    set mouse-=a
+endif
+" 开启行号显示
+set number
+" vim 中可以使用鼠标
+set mouse=a
+" 选择模式使用鼠标
+set selectmode=mouse,key
+" 共享剪贴板
+set clipboard=unnamedplus
+"设置相对行号
+set relativenumber
+set nocompatible    " be iMproved, required
+filetype off        " required
+" Ctrl-n 打开/关闭相对行号显示
+nnoremap <C-n> :call RelativenumberToggle()<CR>
+function RelativenumberToggle()
+    if (&relativenumber == 1)
+       set norelativenumber number
+   else
+       set relativenumber
+   endif
+endfunc
+" 窗口快速切换
+nmap J <C-w>j
+nmap H <C-w>h
+nmap K <C-w>k
+nmap L <C-w>l
+nmap W <C-w>w
+nmap C <C-w>c
+
+"多窗口切换
+nmap bb :bn<CR>
+"快速保存退出
+nmap <Leader>q :q<CR>
+nmap <Leader>wq :wq<CR>
+nmap <Leader>w :w<CR>
+" 括号自动不全
+inoremap ( ()<Esc>i
+inoremap [ []<Esc>i
+inoremap " ""<Esc>i
+inoremap { {<CR>}<Esc>O
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vim color file
+set background=dark
+set t_Co=256 "告知molokai，终端支持256色。
+colorscheme srcery
+set termguicolors
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"ale
+"打开文件时不检查
+let g:ale_lint_on_enter=1
+"始终开启标志列
+let g:ale_sign_column_always = 1
+let g:ale_set_highlights = 0
+"自定义error和warning图标
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚡'
+"在vim自带的状态栏中整合ale
+let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+"显示Linter名称,出错或警告等相关信息
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
+nmap sp <Plug>(ale_previous_wrap)
+nmap sn <Plug>(ale_next_wrap)
+"<Leader>s触发/关闭语法检查
+nmap <Leader>s :ALEToggle<CR>
+"<Leader>d查看错误或警告的详细信息
+nmap <Leader>d :ALEDetail<CR>
+let g:ale_linters={
+\    'c++': ['g++'],
+\    'c': ['clang'],
+\}
+"coc.nvim"
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+"翻译插件配置
+" <Leader>t 翻译光标下的文本，在命令行回显
+nmap <silent> <Leader>t :CocCommand translate.popup 
+vmap <silent> <Leader>t <Plug>TranslateV
+" Leader>w 翻译光标下的文本，在窗口中显示
+nmap <silent> <Leader>w <Plug>TranslateW
+vmap <silent> <Leader>w <Plug>TranslateWV
+" Leader>r 替换光标下的文本为翻译内容
+nmap <silent> <Leader>r <Plug>TranslateR
+vmap <silent> <Leader>r <Plug>TranslateRV
+
+"打开lazygit
+"noremap <A-g> :tabe<CR>:-tabmove<CR>:term lazygit<CR> i
+"noremap <A-r> :tabe<CR>:-tabmove<CR>:term ranger<CR> i
+noremap <A-g> :term lazygit<CR> i
+noremap <A-r> :term ranger<CR> i
+
+"主题设置
+set guicursor+=v:vCursor
+"disable italics
+let g:vorange_italic = 0
+"disable bold
+let g:vorange_bold = 0
+"disable underline
+let g:vorange_underline=0
+"disable undercurl
+let g:vorange_undercurl=0
+
+"coc.nvim设置
+"使用回车补全代码
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"使用[g ]g上下查找错误
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+"使用\h查看文档
+nnoremap <silent> <leader>h :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+"coc侧边栏
+map tt :CocCommand explorer<CR>
+"coc翻译插件配置0
+" <Leader>t 翻译光标下的文本，在命令行回显
+nmap <silent> <Leader>t :CocCommand translator.echo<CR>
+vmap <silent> <Leader>t :CocCommand translator.echo<CR>
+" Leader>w 翻译光标下的文本，在窗口中显示
+nmap <silent> <Leader>r :CocCommand translator.popup<CR>
+vmap <silent> <Leader>r :CocCommand translator.popup<CR>
+" Leader>r 替换光标下的文本为翻译内容
+nmap <silent> <Leader>w :CocCommand translator.replace<CR>
+vmap <silent> <Leader>w :CocCommand translator.replace<CR>
+"
+"新启动界面设置
+" Default value is clap 默认查找插件
+let g:dashboard_default_executive ='fzf'
+let g:indentLine_fileTypeExclude = ['dashboard']
+
+let s:header_commicgirl11 =[
+    \'',
+    \'⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⣀⣀⣀⡀⠀⢀⡀⠀⢀⣀⣀⣀⠀⡀⠀⠀⠀⠀⠀⠀',
+    \'⠀⠀⠀⠀⠀⣠⣎⣀⣀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⡄⠀⠀⠀⠀',
+    \'⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀',
+    \'⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⡿⠏⠿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⡆⠀⠀',
+    \'⠀⠀⠀⣿⣿⣿⣿⣿⣿⡿⢿⠋⠉⠀⠀⠀⠀⠀⡀⠀⠀⠘⢿⣿⣿⣿⣿⣧⠀⠀',
+    \'⠀⠀⢰⣿⣿⣿⣿⠟⢁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠇⠀⠀⡈⠀⠻⣿⣿⣿⣿⠀⠀',
+    \'⠀⠀⣼⣿⣿⡿⠁⠀⢸⠀⠈⢳⣶⣤⣄⠀⠈⠀⠁⠀⠀⠀⢀⠀⠹⣿⣿⡟⠀⠀',
+    \'⠀⠀⣿⣿⣿⠀⠀⠈⣼⡇⠀⠘⠻⠟⠁⠀⠀⠀⠀⢤⣀⡀⠌⠀⠀⣿⣿⠃⠀⠀',
+    \'⠀⠀⣿⣿⣿⡀⠀⠀⡏⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⡿⠋⢰⢠⣿⡏⠀⠀⠀',
+    \'⠀⠀⣿⣿⣿⡇⠀⠀⢷⡃⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣯⣾⡟⠀⠀⠀⠀',
+    \'⠀⠀⣿⣿⣿⡿⠀⠀⣼⣿⡄⠀⠈⠀⢑⠶⠀⠀⠀⠀⢀⣾⣿⣿⣿⡇⠀⠀⠀⠀',
+    \'⠀⠀⣿⣿⣿⠁⠀⠀⣿⣿⠁⠀⠀⠀⢀⣀⣠⣤⣤⣴⠟⣿⣿⣿⣿⡇⠀⠀⠀⠀',
+    \'⠀⠀⠙⢿⠃⠀⠀⢸⣿⣟⠀⠀⢀⣤⣾⣿⣿⣿⠟⠁⢰⣿⣿⣿⣿⠃⠀⠀⠀⠀',
+    \'⠀⠀⠠⠴⠀⠀⠀⠿⠿⠿⠧⠾⠿⠿⠿⠿⠿⠃⠀⠀⠾⠿⠿⠟⠁⠀    ',
+    \'',
+    \]
+let g:dashboard_custom_header =[
+   \' ███████████████████████████ ',
+   \' ███████▀▀▀░░░░░░░▀▀▀███████ ',
+   \' ████▀░░░░░░░░░░░░░░░░░▀████ ',
+   \' ███│░░░░░░░░░░░░░░░░░░░│███ ',
+   \' ██▌│░░░░░░░░░░░░░░░░░░░│▐██ ',
+   \' ██░└┐░░░░░░░░░░░░░░░░░┌┘░██ ',
+   \' ██░░└┐░░░░░░░░░░░░░░░┌┘░░██ ',
+   \' ██░░┌┘▄▄▄▄▄░░░░░▄▄▄▄▄└┐░░██ ',
+   \' ██▌░│██████▌░░░▐██████│░▐██ ',
+   \' ███░│▐███▀▀░░▄░░▀▀███▌│░███ ',
+   \' ██▀─┘░░░░░░░▐█▌░░░░░░░└─▀██ ',
+   \' ██▄░░░▄▄▄▓░░▀█▀░░▓▄▄▄░░░▄██ ',
+   \' ████▄─┘██▌░░░░░░░▐██└─▄████ ',
+   \' █████░░▐█─┬┬┬┬┬┬┬─█▌░░█████ ',
+   \' ████▌░░░▀┬┼┼┼┼┼┼┼┬▀░░░▐████ ',
+   \' █████▄░░░└┴┴┴┴┴┴┴┘░░░▄█████ ',
+   \' ███████▄░░░░░░░░░░░▄███████ ',
+   \' ██████████▄▄▄▄▄▄▄██████████ ',
+   \ ]
+
+"fzf设置
+nnoremap fh :DashboardFindHistory<CR>
+nnoremap ff :DashboardFindFile<CR>
+nnoremap tc :DashboardChangeColorscheme<CR>
+nnoremap fa :DashboardFindWord<CR>
+nnoremap fb :DashboardJumpMark<CR>
+nnoremap cn :DashboardNewFile<CR>
+
+" === coc.nvim自动加载
+let g:coc_global_extensions = [
+	\ 'coc-actions',
+	\ 'coc-css',
+	\ 'coc-diagnostic',
+	\ 'coc-explorer',
+	\ 'coc-flutter-tools',
+	\ 'coc-gitignore',
+	\ 'coc-html',
+	\ 'coc-json',
+	\ 'coc-lists',
+	\ 'coc-prettier',
+	\ 'coc-pyright',
+	\ 'coc-python',
+	\ 'coc-snippets',
+	\ 'coc-sourcekit',
+	\ 'coc-stylelint',
+	\ 'coc-syntax',
+	\ 'coc-tasks',
+	\ 'coc-todolist',
+	\ 'coc-translator',
+	\ 'coc-tslint-plugin',
+	\ 'coc-tsserver',
+	\ 'coc-vetur',
+	\ 'coc-vimlsp',
+	\ 'coc-yaml',
+	\ 'coc-yank']
+
+"snippets代码片段
+" Use <C-h> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-h>'
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-l>'
 
 
