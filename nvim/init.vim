@@ -8,6 +8,7 @@ Plug 'dart-lang/dart-vim-plugin'
 Plug 'f-person/pubspec-assist-nvim', { 'for' : ['pubspec.yaml'] }
 
 "模糊查找
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 "nvim主题
 Plug 'Iron-E/nvim-highlite'
