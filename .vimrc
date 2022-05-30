@@ -23,6 +23,8 @@ Plug 'mhinz/vim-startify'
 Plug 'w0rp/ale'
 " 翻译插件
 Plug 'voldikss/vim-translator'
+"代码补全
+Plug 'skywind3000/vim-auto-popmenu'
 call plug#end()
 
 
@@ -289,6 +291,16 @@ let NERDTreeIgnore =['\.pyc$', '\.swp', '\.swo', '\.vscode', '__pycache__']
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 
+
+""""""""""""""""""""""""""""""""skywind3000""""""""""""""""""""""""""""""""""
+"不要自动选择第一个选项
+set completeopt=menu,menuone,noselect
+"禁止在下方显示哆嗦的提示
+set shortmess+=c
+"自动补全
+let g:apc_enable_ft = {'*':1}
+
+
 """"""""""""""""""""""""""""""""ale""""""""""""""""""""""""""""""""""
 "打开文件时不检查
 let g:ale_lint_on_enter=0
@@ -386,4 +398,5 @@ let g:startify_custom_footer = [
             \ '+----------------+-------------+',
             \]
 
+source /home/pi/.vim/plugged/vim-auto-popmenu/plugin/apc.vim
 
