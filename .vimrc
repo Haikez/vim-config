@@ -61,6 +61,10 @@ set ignorecase
 set smartcase
 " 把 <Tab> 替换成 4 个空格
 set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set noexpandtab
+set nu
 " 状态行显示的内容
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 " <ESC> 键响应时间
