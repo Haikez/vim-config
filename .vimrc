@@ -4,6 +4,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'	
 " 主题
 Plug 'tomasr/molokai'	
+Plug 'morhetz/gruvbox'
 " nerdtree
 Plug 'preservim/nerdtree'
 " 缩进线
@@ -345,7 +346,8 @@ let g:cpp_no_function_highlight = 1
 " Vim color file
 set background=dark
 set t_Co=256 "告知molokai，终端支持256色。
-colorscheme molokai 
+"colorscheme molokai 
+colorscheme gruvbox
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:indent_guides_enable_on_vim_startup = 1 "添加行，vim启动时启用
 let g:indent_guides_start_level = 1           "添加行，开始显示对齐线的缩进级别
