@@ -120,6 +120,9 @@ set mouse=a
 set selectmode=mouse,key
 " 共享剪贴板
 set clipboard=unnamedplus
+" 插入模式竖线
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 "设置相对行号
 set relativenumber
 filetype off        " required
@@ -374,7 +377,7 @@ vmap <silent> <Leader>w <Plug>TranslateRV
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "设置书签
 let g:startify_bookmarks            = [
-            \ '~/Project/test.cpp',
+            \ '~/C-Work',
             \]
 "起始页显示的列表长度
 let g:startify_files_number = 5
